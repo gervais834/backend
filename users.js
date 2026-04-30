@@ -1,25 +1,15 @@
+import db from "./db.js";
 
-import db from "./db.js"
+const getUsers = async (req, res) => {
+  try {
+    const [users] = await db.query("SELECT * FROM users");
 
- const getUsers= async (req,res) =>{
-    try{
-         const query= "SELECT * from users"
+    return res.json({ users }); // return even if empty
+  } catch (error) {
+    return res.status(500).json({
+      error: `Internal Server Error: ${error.message}`,
+    });
+  }
+};
 
-   const users= await db.query(query)
-   if(users.length===0){
-    return res.status(404).json({error: "No users found"})
-   }
-
-   res.json({users:users})
-
-    }
-    catch(error){
-        res.status(500).json({error: `Internal Server Error: ${error.message}`})
-    }
-
-  
-
-   
- }
-
- export default getUsers
+export default getUsers;
