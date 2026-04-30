@@ -5,14 +5,19 @@ const db = await mysql.createConnection({
   port: 25934,
   user: "root",
   password: "zTnazIGuSBgyBUlNAHIsewfINLXjEbNg",
-  database: "nizeyiman_project4"
+  database: "nizeyiman_project4",
+  
 });
-db.execute("drop table if exists users")
-db.execute("create table if not exists users (id int auto_increment primary key, username varchar(255), email varchar(255), password varchar(255))")
 
-db.connect()
-  .then(() => {
-    console.log("Connected to the database!");
-    })
+await db.connect()
+.then(() => {
+    console.log("Connected to the database successfully!");
+    
+})
+.catch((error) => {
+    console.error("Error connecting to the database:", error.message);
+});
+
+
 
 export default db;
